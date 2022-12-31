@@ -1,0 +1,39 @@
+        public async void SendUserAuthConfirmation(ConfirmAuthRequest model)
+        {
+            EmailAddress from = AdminEmail();
+
+            string link = _sendValidationEmail.Url + "/confirmuser" + $"?email={model.Email}&token={model.Token}";
+            var subject = "Verify Email";
+            string path = Path.Combine(_webHostEnvironment.WebRootPath, "EmailTemplates", "UserAuthEmailConfirmation.html");
+            string template = File.ReadAllText(path).Replace("{{FirstName}}", model.FirstName).Replace("{{Link}}", link);
+
+            var msg = new SendGridMessage()
+            {
+                From = from,
+                Subject = subject,
+                HtmlContent = template
+            };
+            msg.AddTo(new EmailAddress(model.Email));
+            await SendEmail(msg);
+
+        }
+
+        public async void SendPasswordReset(PasswordRequest model)
+        {
+            EmailAddress from = AdminEmail();
+
+            string link = _sendValidationEmail.Url + "/changepassword" + $"?email={model.Email}&token={model.Token}";
+            var subject = "Reset Password";
+            string path = Path.Combine(_webHostEnvironment.WebRootPath, "EmailTemplates", "ResetPasswordEmail.html");
+            string template = File.ReadAllText(path).Replace("{{Link}}", link);
+
+            var msg = new SendGridMessage()
+            {
+                From = from,
+                Subject = subject,
+                HtmlContent = template
+            };
+            msg.AddTo(new EmailAddress(model.Email));
+            await SendEmail(msg);
+
+        }
