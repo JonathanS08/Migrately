@@ -1,1 +1,1 @@
-# Migrately
+# Migrately is a platform that allows for a personalized visa application experience for those who want to obtain a United States visa. Migrately is a MVP and due to the proprietary nature of the code I can only provide code snippets of my code. This repository contains SQL, .NET, and React code fot the Users features.
