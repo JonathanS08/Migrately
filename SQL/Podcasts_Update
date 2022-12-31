@@ -1,0 +1,49 @@
+USE [Migrately]
+GO
+/****** Object:  StoredProcedure [dbo].[Podcasts_Update]    Script Date: 12/31/2022 1:52:03 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- Author: Jonathan Searcy
+-- Create date: 12/16/22
+-- Description: Updates a podcast at an id
+-- Code Reviewer: Sorin W.
+
+ALTER proc [dbo].[Podcasts_Update]
+		@Title nvarchar(100)
+        ,@Description nvarchar(100)
+		,@Link nvarchar(255)
+		,@CoverPhoto nvarchar(255)
+		,@Id int
+      
+/*
+Declare @Title nvarchar(100) = 'We Updated'
+        ,@Description nvarchar(100) = 'An updated and fun description'
+		,@Link nvarchar(255) = 'meow.com'
+		,@CoverPhoto nvarchar(255) = 'images.com'
+		,@Id int = 5
+
+Execute dbo.Podcasts_Update
+		@Title 
+        ,@Description 
+		,@Link 
+		,@CoverPhoto 
+		,@Id 
+*/
+
+AS
+
+BEGIN
+
+DECLARE @DateModified datetime2(7) = getutcdate()
+
+UPDATE [dbo].[Podcasts]
+   SET [Title] = @Title
+      ,[Description] = @Description
+      ,[Link] = @Link
+      ,[CoverPhoto] = @CoverPhoto
+      ,[DateModified] = @DateModified
+ WHERE Id = @Id
+
+END
